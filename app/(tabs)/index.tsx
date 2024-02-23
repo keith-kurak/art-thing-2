@@ -7,7 +7,7 @@ export default function TabOneScreen() {
 
   return (
     <View className="flex-1">
-      <FlatList
+      <FlatList<any>
         data={query.data}
         keyExtractor={(item: string) => item}
         renderItem={({ item }) => (

@@ -1,5 +1,5 @@
 import { View, Text, FlatList, Pressable } from "react-native";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Stack, Link, useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
 import { useWorksForDepartmentQuery } from '@/data/hooks/useWorksForDepartmentQuery';
 
@@ -11,6 +11,11 @@ export default function TabOneScreen() {
 
   return (
     <View className="flex-1">
+      <Stack.Screen
+        options={{
+          title: department,
+        }}
+      />
       <FlatList
         data={query.data}
         keyExtractor={(item: any) => item.id}

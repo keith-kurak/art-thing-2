@@ -1,31 +1,82 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import { useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Image } from "expo-image";
+import { Link } from "expo-router";
+import { Text, View, } from "@/components/Themed";
+import { useFavsQuery } from '@/data/hooks/useFavsQuery';
 
 export default function TabTwoScreen() {
+  const favsQuery = useFavsQuery();
+
+  const favs = favsQuery.data;
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
-    </View>
+    <FlatList
+      data={favs}
+      renderItem={({ item }) => (
+        <View style={styles.imageContainerStyle}>
+          <Link asChild href={`/works/${item.id}/`}>
+            <TouchableOpacity
+              key={item.id}
+              style={{ flex: 1 }}
+              onPress={() => {}}
+            >
+              <Image
+                style={styles.imageStyle}
+                source={{
+                  uri: item.image,
+                }}
+              />
+            </TouchableOpacity>
+          </Link>
+        </View>
+      )}
+      //Setting the number of column
+      numColumns={3}
+      keyExtractor={(item, index) => index.toString()}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#ffffff",
   },
-  title: {
+  titleStyle: {
+    padding: 16,
     fontSize: 20,
-    fontWeight: 'bold',
+    color: "white",
+    backgroundColor: "green",
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  imageContainerStyle: {
+    flex: 1,
+    flexDirection: "column",
+    margin: 1,
+  },
+  imageStyle: {
+    height: 120,
+    width: "100%",
+  },
+  fullImageStyle: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "98%",
+    resizeMode: "contain",
+  },
+  modelStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.4)",
+  },
+  closeButtonStyle: {
+    width: 25,
+    height: 25,
+    top: 50,
+    right: 20,
+    position: "absolute",
   },
 });

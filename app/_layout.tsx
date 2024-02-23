@@ -52,7 +52,11 @@ function RootLayoutNav() {
   return (
     <QueryClientProvider client={queryClient}>
       <View style={{ flex: 1 }}>
-        <Stack>
+        <Stack
+          screenOptions={{
+            headerBackTitleVisible: false,
+          }}
+        >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
