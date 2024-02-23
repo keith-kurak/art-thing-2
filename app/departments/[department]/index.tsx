@@ -32,7 +32,7 @@ export default function TabOneScreen() {
                   </Text>
                 </View>
                 <Image
-                  style={{ height: 100, width: 100 }}
+                  className="h-28 w-28"
                   source={{ uri: item.images.web.url }}
                   contentFit="contain"
                   transition={1000}

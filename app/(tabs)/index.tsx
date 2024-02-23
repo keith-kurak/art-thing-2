@@ -1,5 +1,6 @@
 import { View, Text, FlatList, Pressable } from "react-native";
 import { Link } from "expo-router";
+import { Image } from "expo-image";
 import { useDepartmentsQuery } from "@/data/hooks/useDepartmentsQuery";
 
 export default function TabOneScreen() {
@@ -7,13 +8,21 @@ export default function TabOneScreen() {
 
   return (
     <View className="flex-1">
-      <FlatList<any>
+      <FlatList<{ department: string; imageUrl: string }>
         data={query.data}
-        keyExtractor={(item: string) => item}
+        keyExtractor={(item) => item.department}
         renderItem={({ item }) => (
-          <Link asChild href={`/departments/${item}/`}>
+          <Link asChild href={`/departments/${item.department}/`}>
             <Pressable>
-              <Text className="text-2xl px-2 py-2">{item}</Text>
+              <Image
+                className="h-24 w-full"
+                source={{
+                  uri: item.imageUrl,
+                }}
+              />
+              <Text className="absolute right-2 bottom-2 text-3xl text-white font-semibold">
+                {item.department}
+              </Text>
             </Pressable>
           </Link>
         )}
