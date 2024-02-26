@@ -1,9 +1,6 @@
-import { StyleSheet, TouchableOpacity, FlatList } from "react-native";
-import { useEffect } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { StyleSheet, TouchableOpacity, FlatList, View } from "react-native";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
-import { Text, View, } from "@/components/Themed";
 import { useFavsQuery } from '@/data/hooks/useFavsQuery';
 
 export default function TabTwoScreen() {

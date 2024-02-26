@@ -5,14 +5,18 @@ import { Link, Tabs } from "expo-router";
 import { Pressable } from "react-native";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import colors from "tailwindcss/colors";
+import customColors from "@/constants/colors";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"] | React.ComponentProps<typeof MaterialIcons>["name"];
+  name:
+    | React.ComponentProps<typeof FontAwesome>["name"]
+    | React.ComponentProps<typeof MaterialIcons>["name"];
   type?: "FontAwesome" | "MaterialIcons";
   color: string;
 }) {
-  const IconComponent = props.type === "MaterialIcons" ? MaterialIcons : FontAwesome;
+  const IconComponent =
+    props.type === "MaterialIcons" ? MaterialIcons : FontAwesome;
   // @ts-ignore
   return <IconComponent size={28} style={{ marginBottom: -3 }} {...props} />;
 }
@@ -30,8 +34,10 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Exhibits",
-          tabBarActiveTintColor: "#484EEC", // TODO: extract to separate file, see https://www.nativewind.dev/v4/guides/themes#access-theme-values
-          tabBarIcon: ({ color }) => <TabBarIcon type="MaterialIcons" name="museum" color={color} />,
+          tabBarActiveTintColor: customColors.tint,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon type="MaterialIcons" name="museum" color={color} />
+          ),
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -39,7 +45,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name="info-circle"
                     size={25}
-                    color={colors.black[100]}
+                    color={customColors.tint}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -52,7 +58,9 @@ export default function TabLayout() {
         name="two"
         options={{
           title: "Favorites",
-          tabBarIcon: ({ color }) => <TabBarIcon type="FontAwesome" name="star" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon type="FontAwesome" name="star" color={color} />
+          ),
         }}
       />
     </Tabs>

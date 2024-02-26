@@ -10,6 +10,7 @@ export default function TabOneScreen() {
     <View className="flex-1">
       <FlatList<{ department: string; imageUrl: string }>
         data={query.data}
+        contentContainerClassName="mb-safe"
         keyExtractor={(item) => item.department}
         renderItem={({ item }) => (
           <Link asChild href={`/departments/${item.department}/`}>
@@ -20,7 +21,7 @@ export default function TabOneScreen() {
                   uri: item.imageUrl,
                 }}
               />
-              <Text className="absolute right-2 bottom-2 text-3xl text-white font-semibold">
+              <Text className="absolute right-2 bottom-2 text-3xl text-white font-semibold text-right">
                 {item.department}
               </Text>
             </Pressable>

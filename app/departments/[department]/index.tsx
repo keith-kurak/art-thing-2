@@ -1,13 +1,15 @@
 import { View, Text, FlatList, Pressable } from "react-native";
 import { Stack, Link, useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
-import { useWorksForDepartmentQuery } from '@/data/hooks/useWorksForDepartmentQuery';
+import { useWorksForDepartmentQuery } from "@/data/hooks/useWorksForDepartmentQuery";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabOneScreen() {
-
   const { department }: { department: string } = useLocalSearchParams();
 
   const query = useWorksForDepartmentQuery(department);
+
+  const insets = useSafeAreaInsets();
 
   return (
     <View className="flex-1">
@@ -17,30 +19,40 @@ export default function TabOneScreen() {
         }}
       />
       <FlatList
+        contentContainerClassName="bg-shade-0"
+        contentContainerStyle={{ paddingBottom: insets.bottom }}
         data={query.data}
         keyExtractor={(item: any) => item.id}
         renderItem={({ item }) => (
           <Link asChild href={`/works/${item.id}/`}>
             <Pressable>
-            <View className="flex-row px-4">
+              <View className="flex-row bg-shade-1">
                 <View className="flex-1 justify-start">
-                  <Text className="text-xl">{item.title}</Text>
-                  <Text className="italic">
-                    {item.creation_date_earliest !== item.creation_date_latest
-                      ? `${item.creation_date_earliest}-${item.creation_date_latest}`
-                      : `${item.creation_date_earliest}`}
+                  <Text className="text-2xl bg-shade-2 pl-4 py-2">
+                    {item.title}
                   </Text>
+                  <View className="my-2 mx-2">
+                    <Text className="italic pl-4">{item.date_text}</Text>
+                    {item.creators.length ? (
+                      <Text className="italic pl-4">
+                        {item.creators[0].description}
+                      </Text>
+                    ) : null}
+                  </View>
                 </View>
-                <Image
-                  className="h-28 w-28"
-                  source={{ uri: item.images.web.url }}
-                  contentFit="contain"
-                  transition={1000}
-                />
+                <View className="py-2 px-4 bg-shade-2 justify-center">
+                  <Image
+                    className="h-28 w-28"
+                    source={{ uri: item.images.web.url }}
+                    contentFit="contain"
+                    transition={500}
+                  />
+                </View>
               </View>
-              </Pressable>
+            </Pressable>
           </Link>
         )}
+        ItemSeparatorComponent={() => <View className="h-1 bg-shade-0" />}
       />
     </View>
   );

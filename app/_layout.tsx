@@ -5,12 +5,23 @@ import { Image } from "expo-image";
 import * as SplashScreen from "expo-splash-screen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { View } from "react-native";
-import { cssInterop } from "nativewind";
+import { View, FlatList, ScrollView } from "react-native";
+import { cssInterop, remapProps } from "nativewind";
 import "../global.css";
 
 // component interops for nativewind - just need these once
 cssInterop(Image, { className: "style" });
+
+remapProps(FlatList, {
+  className: "style",
+  contentContainerClassName: "contentContainerStyle",
+});
+
+remapProps(ScrollView, {
+  className: "style",
+  contentContainerClassName: "contentContainerStyle",
+});
+
 
 export {
   // Catch any errors thrown by the Layout component.

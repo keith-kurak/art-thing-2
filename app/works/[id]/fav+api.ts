@@ -14,7 +14,6 @@ export async function POST(request: ExpoRequest) {
   const id = params.get("id")!;
   const body = await request.json();
   const status = body.status;
-  console.log(status)
   const database = new Database();
   await database.setFavoriteStatus(id, status);
   return ExpoResponse.json(status);
