@@ -14,7 +14,7 @@ class Database {
   async getFavorites() {
     await this.initIfNeeded();
     const favs = (await storage.getItem("favs")) || {};
-    return keys(favs).map((id) => ({
+    return keys(favs).filter(favsKey => favs[favsKey]).map((id) => ({
       id,
       image: artwork.data.find((item: any) => item.id == id).images.web.url,
     }));

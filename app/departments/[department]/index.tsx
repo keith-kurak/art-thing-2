@@ -3,6 +3,7 @@ import { Stack, Link, useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
 import { useWorksForDepartmentQuery } from "@/data/hooks/useWorksForDepartmentQuery";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { LoadingShade } from '@/components/LoadingShade';
 
 export default function TabOneScreen() {
   const { department }: { department: string } = useLocalSearchParams();
@@ -28,7 +29,7 @@ export default function TabOneScreen() {
             <Pressable>
               <View className="flex-row bg-shade-1">
                 <View className="flex-1 justify-start">
-                  <Text className="text-2xl bg-shade-2 pl-4 py-2">
+                  <Text className="text-2xl font-semibold bg-shade-2 pl-4 py-2">
                     {item.title}
                   </Text>
                   <View className="my-2 mx-2">
@@ -54,6 +55,7 @@ export default function TabOneScreen() {
         )}
         ItemSeparatorComponent={() => <View className="h-1 bg-shade-0" />}
       />
+      <LoadingShade isLoading={query.isLoading} />
     </View>
   );
 }

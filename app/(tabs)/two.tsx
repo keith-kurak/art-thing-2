@@ -1,7 +1,8 @@
 import { StyleSheet, TouchableOpacity, FlatList, View } from "react-native";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
-import { useFavsQuery } from '@/data/hooks/useFavsQuery';
+import { useFavsQuery } from "@/data/hooks/useFavsQuery";
+import { LoadingShade } from "@/components/LoadingShade";
 
 export default function TabTwoScreen() {
   const favsQuery = useFavsQuery();
@@ -9,30 +10,33 @@ export default function TabTwoScreen() {
   const favs = favsQuery.data;
 
   return (
-    <FlatList
-      data={favs}
-      renderItem={({ item }) => (
-        <View style={styles.imageContainerStyle}>
-          <Link asChild href={`/works/${item.id}/`}>
-            <TouchableOpacity
-              key={item.id}
-              style={{ flex: 1 }}
-              onPress={() => {}}
-            >
-              <Image
-                style={styles.imageStyle}
-                source={{
-                  uri: item.image,
-                }}
-              />
-            </TouchableOpacity>
-          </Link>
-        </View>
-      )}
-      //Setting the number of column
-      numColumns={3}
-      keyExtractor={(item, index) => index.toString()}
-    />
+    <View className="flex-1 bg-shade-1">
+      <FlatList
+        data={favs}
+        renderItem={({ item }) => (
+          <View style={styles.imageContainerStyle}>
+            <Link asChild href={`/works/${item.id}/`}>
+              <TouchableOpacity
+                key={item.id}
+                style={{ flex: 1 }}
+                onPress={() => {}}
+              >
+                <Image
+                  style={styles.imageStyle}
+                  source={{
+                    uri: item.image,
+                  }}
+                />
+              </TouchableOpacity>
+            </Link>
+          </View>
+        )}
+        //Setting the number of column
+        numColumns={3}
+        keyExtractor={(item, index) => index.toString()}
+      />
+      <LoadingShade isLoading={favsQuery.isLoading} />
+    </View>
   );
 }
 
