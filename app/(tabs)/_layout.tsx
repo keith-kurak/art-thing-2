@@ -4,7 +4,6 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Link, Tabs } from "expo-router";
 import { Pressable } from "react-native";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
-import colors from "tailwindcss/colors";
 import customColors from "@/constants/colors";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
