@@ -1,3 +1,5 @@
+/* for bypassing API Routes and just saving data inside your app's local storage */
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { keys } from "lodash";
 
