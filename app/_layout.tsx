@@ -22,7 +22,6 @@ remapProps(ScrollView, {
   contentContainerClassName: "contentContainerStyle",
 });
 
-
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,

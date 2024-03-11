@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "start-local": "EXPO_PUBLIC_USE_LOCAL_DATA=true expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
+    "@react-native-async-storage/async-storage": "^1.22.3",
     "@react-navigation/native": "^6.0.2",
     "@tanstack/react-query": "^5.20.5",
     "@types/lodash": "^4.14.202",

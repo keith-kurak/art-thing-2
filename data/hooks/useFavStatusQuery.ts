@@ -1,18 +1,29 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { LocalDatabase } from '@/data/api/local-database';
 
 const data = require("../api/cma_artwork.json");
 
 export const useFavStatusQuery = function(id: string) {
-  const queryClient = useQueryClient();
-
   // Queries
   const query = useQuery({
     queryKey: [`works:fav:${id}`],
     queryFn: async () => {
-      const response = await fetch(`/works/${id}/fav`);
-      return await response.json();
+      if (process.env.EXPO_PUBLIC_USE_LOCAL_DATA) {
+         return await fetchFromLocal(id)
+      }
+      return await fetchFromServer(id)
     },
   });
 
   return query;
+}
+
+async function fetchFromServer(id: string) {
+  const response = await fetch(`/works/${id}/fav`);
+  return await response.json();
+}
+
+async function fetchFromLocal(id: string) {
+  const db = new LocalDatabase();
+  return await db.getFavoriteStatus(id);
 }
