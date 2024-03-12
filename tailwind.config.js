@@ -12,7 +12,6 @@ module.exports = {
         "shade-0": "#ffffff",
         "shade-1": "#f5f5f5",
         "shade-2": "#CDCDCD",
-        "tint-2": colors.tint
       },
     }
   },
