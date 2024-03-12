@@ -8,7 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "strip-unused-fields-from-api-data": "node ./data/api/strip_fields.js"
   },
   "jest": {
     "preset": "jest-expo"
@@ -28,6 +29,7 @@
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "~2.9.3",
     "expo-web-browser": "~12.8.2",
+    "jsonfile": "^6.1.0",
     "lodash": "^4.17.21",
     "nativewind": "^4.0.29",
     "node-persist": "^4.0.1",
