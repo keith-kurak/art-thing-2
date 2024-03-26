@@ -1,5 +1,6 @@
 import { ExpoRequest, ExpoResponse } from "expo-router/server";
 import { Database } from '@/data/api/database';
+import { createClient } from '@supabase/supabase-js'
 
 export async function GET(request: ExpoRequest) {
   // read the query string
