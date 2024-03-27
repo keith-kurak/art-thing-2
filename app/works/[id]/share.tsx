@@ -3,10 +3,11 @@ import {
   View,
   Text,
   useWindowDimensions,
-  Share,
   Pressable,
+  Platform,
 } from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
+import * as Sharing from "expo-sharing";
 import { Image } from "expo-image";
 import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
 import { LoadingShade } from "@/components/LoadingShade";
@@ -67,7 +68,7 @@ export default function ShareWork() {
         },
       ],
       quality: 100,
-      filename: image.path,
+      filename: image.filename,
       saveFormat: ImageFormat.jpg,
     });
 
@@ -76,11 +77,16 @@ export default function ShareWork() {
   }
 
   async function share() {
-    await Share.share({
-      message: "I cropped a square for you! #cma",
-    });
+    await Sharing.shareAsync(
+      Platform.OS === "android" ? `file:${croppedImage}` : croppedImage
+    );
   }
 
+  const path = croppedImage
+    ? Platform.OS === "android"
+      ? `file:${croppedImage}`
+      : croppedImage
+    : work && work.images.web.url;
   return (
     <View className="flex-1 bg-shade-1">
       <Stack.Screen
@@ -101,7 +107,7 @@ export default function ShareWork() {
         >
           <Image
             source={{
-              uri: croppedImage ?? (work && work.images.web.url),
+              uri: path,
             }}
             style={{
               width: "100%",
