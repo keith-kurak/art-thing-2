@@ -1,13 +1,26 @@
-import { View, Text, useWindowDimensions } from "react-native";
+import { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  useWindowDimensions,
+  Share,
+  Pressable,
+} from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
 import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
 import { LoadingShade } from "@/components/LoadingShade";
+import ImagePicker from "react-native-image-crop-picker";
+import Marker, {
+  ImageFormat,
+  Position,
+  TextBackgroundType,
+} from "react-native-image-marker";
 
 // TODO:
-// 1. Open cropper to make a square from the image: https://github.com/ivpusic/react-native-image-crop-picker?tab=readme-ov-file#crop-picture
-// 2. Apply museum advertising watermark (e.g., a hashtag or a URL or something) with react-native-image-marker
-// 3. Open share sheet to share the image with another app
+// ~1. Open cropper to make a square from the image: https://github.com/ivpusic/react-native-image-crop-picker?tab=readme-ov-file#crop-picture
+// ~2. Apply museum advertising watermark (e.g., a hashtag or a URL or something) with react-native-image-marker
+// ~3. Open share sheet to share the image with another app
 // 4. Do something with this view to indicate that sharing is done (maybe swap displayed image for the modified one with "you shared it!" message)
 
 export default function ShareWork() {
@@ -21,11 +34,58 @@ export default function ShareWork() {
   const workQuery = useWorkByIdQuery(id);
   const work = workQuery.data;
 
+  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+
+  async function crop() {
+    const image = await ImagePicker.openCropper({
+      path: work.images.web.url,
+      width: 300,
+      height: 300,
+      mediaType: "photo",
+    });
+    const markedImage = await Marker.markText({
+      backgroundImage: {
+        src: image.path,
+        scale: 1,
+      },
+      watermarkTexts: [
+        {
+          text: "#cma",
+          position: {
+            position: Position.bottomRight,
+          },
+          style: {
+            color: "#fff",
+            fontSize: 20,
+            textBackgroundStyle: {
+              type: TextBackgroundType.none,
+              color: "#000",
+              paddingX: 16,
+              paddingY: 6,
+            },
+          },
+        },
+      ],
+      quality: 100,
+      filename: image.path,
+      saveFormat: ImageFormat.jpg,
+    });
+
+    console.log("markedImage", markedImage);
+    setCroppedImage(markedImage);
+  }
+
+  async function share() {
+    await Share.share({
+      message: "I cropped a square for you! #cma",
+    });
+  }
+
   return (
     <View className="flex-1 bg-shade-1">
       <Stack.Screen
         options={{
-          title: "Share",
+          title: "Share Square",
         }}
       />
       <View className="py-4 px-4 bg-shade-2">
@@ -40,14 +100,71 @@ export default function ShareWork() {
           }}
         >
           <Image
-            source={{ uri: work && work.images.web.url }}
-            style={{ width: "100%", height: "100%" }}
+            source={{
+              uri: croppedImage ?? (work && work.images.web.url),
+            }}
+            style={{
+              width: "100%",
+              height: "100%",
+              opacity: croppedImage ? 1 : 0.3,
+            }}
             contentFit="cover"
             transition={500}
           />
-          <View className="absolute bottom-4 right-4">
-            <Text className="text-xl text-white">#cma</Text>
-          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 16,
+            alignSelf: "center",
+          }}
+        >
+          <Pressable onPress={crop}>
+            {({ pressed }) => (
+              <View
+                style={{
+                  marginTop: 20,
+                  paddingHorizontal: 16,
+                  paddingVertical: 8,
+                  backgroundColor: pressed
+                    ? "rgba(0, 0, 0, 0.9)"
+                    : "rgba(0, 0, 0, 0.4)",
+                }}
+              >
+                <Text
+                  style={{ fontSize: 18, color: "#FFF", fontWeight: "bold" }}
+                >
+                  Crop
+                </Text>
+              </View>
+            )}
+          </Pressable>
+          <Pressable
+            onPress={croppedImage ? share : undefined}
+            disabled={croppedImage === null}
+          >
+            {({ pressed }) => (
+              <View
+                style={{
+                  marginTop: 20,
+                  paddingHorizontal: 16,
+                  paddingVertical: 8,
+                  backgroundColor:
+                    croppedImage === null
+                      ? "rgba(0, 0, 0, 0.15)"
+                      : pressed
+                      ? "rgba(0, 0, 0, 0.9)"
+                      : "rgba(0, 0, 0, 0.6)",
+                }}
+              >
+                <Text
+                  style={{ fontSize: 18, color: "#FFF", fontWeight: "bold" }}
+                >
+                  Share
+                </Text>
+              </View>
+            )}
+          </Pressable>
         </View>
       </View>
       <LoadingShade isLoading={workQuery.isLoading} />
