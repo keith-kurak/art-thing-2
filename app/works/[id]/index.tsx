@@ -5,7 +5,7 @@ import {
   Pressable,
   useWindowDimensions,
 } from "react-native";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, Link } from "expo-router";
 import { Image } from "expo-image";
 import { FontAwesome as Icon } from "@expo/vector-icons";
 import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
@@ -15,7 +15,7 @@ import colors from "@/constants/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LoadingShade } from "@/components/LoadingShade";
 
-export default function TabOneScreen() {
+export default function DisplayWork() {
   const dimensions = useWindowDimensions();
 
   const insets = useSafeAreaInsets();
@@ -61,7 +61,7 @@ export default function TabOneScreen() {
             <Text className="flex-1 font-semibold text-3xl px-4 py-2 bg-shade-2">
               {work?.title}
             </Text>
-            <View className="justify-center px-4">
+            <View className="justify-center px-4 flex-row items-center gap-x-2">
               <Pressable
                 className="active:opacity-50"
                 disabled={favQuery.isLoading || favMutation.isPending}
@@ -75,6 +75,13 @@ export default function TabOneScreen() {
                   size={28}
                 />
               </Pressable>
+              <Link push href={`/works/${id}/share`}>
+                <Icon
+                  name="share-alt"
+                  color={colors.tint}
+                  size={28}
+                />
+              </Link>
             </View>
           </View>
           <View className="px-4 gap-y-2 py-2">
