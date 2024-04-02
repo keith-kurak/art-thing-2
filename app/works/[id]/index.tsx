@@ -15,7 +15,7 @@ import colors from "@/constants/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LoadingShade } from "@/components/LoadingShade";
 
-export default function TabOneScreen() {
+export default function WorkScreen() {
   const dimensions = useWindowDimensions();
 
   const insets = useSafeAreaInsets();
