@@ -2,13 +2,17 @@ import { StatusBar } from "expo-status-bar";
 import { Platform, ScrollView, View, Text } from "react-native";
 import { Image } from "expo-image";
 import { Stack } from "expo-router";
+import { useMediaQuery } from '@/constants/useMediaQuery';
 
 export default function VisitScreen() {
+  const { isLarge } = useMediaQuery();
+
   return (
     <View className="flex-1">
       <Stack.Screen
         options={{
           title: "Visit CMA",
+          headerLeft: isLarge ? () => null : undefined,
         }}
       />
       <ScrollView className="bg-shade-1">
