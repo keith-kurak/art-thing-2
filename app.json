@@ -16,7 +16,6 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
       "bundleIdentifier": "com.keithkurak.artthing2"
     },
     "android": {
