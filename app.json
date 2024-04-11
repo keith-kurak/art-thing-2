@@ -1,24 +1,29 @@
 {
   "expo": {
-    "name": "art-thing-2",
+    "name": "Art Museum!",
     "slug": "art-thing-2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {},
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.keithkurak.artthing2"
+    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.keithkurak.artthing2"
     },
     "web": {
       "bundler": "metro",
@@ -31,10 +36,30 @@
         {
           "origin": "https://artthing2.dev/"
         }
+      ],
+      [
+        "expo-quick-actions",
+        {
+          "androidIcons": {
+            "help_icon": {
+              "foregroundImage": "./assets/images/adaptive-icon-help.png",
+              "backgroundColor": "#29cfc1"
+            }
+          }
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": "https://artthing2.dev/"
+      },
+      "eas": {
+        "projectId": "f6b73ba6-d0c7-4cb1-b789-d949aba9a851"
+      }
+    },
+    "owner": "keith-kurak"
   }
 }
