@@ -29,7 +29,7 @@ The data from the artwork API is pulled locally in order to make this into a wor
 
 The request I use is `https://openaccess-api.clevelandart.org/api/artworks?has_image=1&currently_on_view=1`, which gets works with online images that are currently on display at the museum.
 
-I think then run `npm strip-unused-fields-from-api-data` to remove unused fields and optionally limit the artwork to a smaller number. This is done in order to make live reloading for testing more quickly. The API itself also has the ability to limit fields, but I get "Internal Server Error" when I list the `description` field specifically in the API.
+I then run `npm strip-unused-fields-from-api-data` to remove unused fields and optionally limit the artwork to a smaller number. This is done in order to make live reloading for testing more quickly. The API itself also has the ability to limit fields, but I get "Internal Server Error" when I list the `description` field specifically in the API.
 
 If I was really embedding the artwork into the app, I would treat the JSON files as assets, so they wouldn't get bundled. They would load quite quickly in this case, even with zero filtering. If I was really using the API online, it wouldn't be difficult to transition to this- simply replace the offline access in the **hooks** with fetch requests.
 
