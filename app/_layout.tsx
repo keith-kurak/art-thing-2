@@ -106,7 +106,6 @@ function RootLayoutNav() {
           }}
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="visit" options={{ presentation: "modal" }} />
           <Stack.Screen name="help" options={{ presentation: "modal" }} />
         </Stack>
         <View className="max-sm:hidden h-8" />
