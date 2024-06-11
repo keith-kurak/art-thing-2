@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
-import { FontAwesome as Icon } from "@expo/vector-icons";
+import Icon from "@expo/vector-icons/FontAwesome";
 import { useWorkByIdQuery } from "@/data/hooks/useWorkByIdQuery";
 import { useFavStatusQuery } from "@/data/hooks/useFavStatusQuery";
 import { useFavStatusMutation } from "@/data/hooks/useFavStatusMutation";
