@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { Platform, ScrollView, View, Text, Button } from "react-native";
-import { FontAwesome } from '@expo/vector-icons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Stack, Link } from "expo-router";
 import colors from '@/constants/colors';
 
