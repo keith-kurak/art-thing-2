@@ -13,8 +13,15 @@ App concept: you download this thing before visiting the museum to preview the a
 - The favorites functionality is done with Expo Router API routes. Look for the +api files, one to get/ set claps for individual works, and another to read them all back for the Favorites tab. It's all going to a local data store (really just a text file) to keep things simple and self-contained.
 - Styling via Nativewind v4
 ## How to run
+
+### Web
 1. Run `npm install`
 2. Run `npx expo start`
+
+### Native
+1. Run `npm install`
+2. Make a development build (e.g., `eas init; eas build --profile development`) or build locally (e.g., `npx expo run:ios`).
+3. Run `npx expo start`
 
 ## Other fun stuff
 ### Local data mode
