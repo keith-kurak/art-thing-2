@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Pressable, useWindowDimensions } from 'react-native'
-import { Stack, useLocalSearchParams } from 'expo-router'
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import { Image } from 'expo-image'
 import Icon from '@expo/vector-icons/FontAwesome'
 import { useWorkByIdQuery } from '@/data/hooks/useWorkByIdQuery'
@@ -28,31 +28,37 @@ export default function WorkScreen() {
 
   // update fav status
   const favMutation = useFavStatusMutation()
+  
+  const router = useRouter()
 
   return (
-    <View className="flex-1 bg-shade-1">
-      <Stack.Screen
-        options={{
-          title: work?.title || 'Loading...',
-        }}
-      />
-      <ScrollView
-        contentContainerStyle={{ paddingBottom: insets.bottom }}
-        contentContainerClassName="bg-shade-1"
-      >
-        <View className="py-4 px-4 bg-shade-2">
-          <Image
-            style={{
-              height: dimensions.width > 640 ? 640 : dimensions.width,
-            }}
-            source={{ uri: work && work.images.web.url }}
-            contentFit="contain"
-            transition={500}
-          />
-        </View>
-        <View>
+    <View className="flex-1">
+      <View className="absolute bottom-0 top-0 left-0 right-0 opacity-50 bg-black" />
+      <View className="flex-1 bg-shade-1 bg-transparent my-20 mx-28 py-4">
+        <Stack.Screen
+          options={{
+            title: work?.title || 'Loading...',
+            presentation: 'transparentModal',
+            headerShown: false,
+          }}
+        />
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: insets.bottom }}
+          contentContainerClassName="bg-shade-1"
+        >
           <View className="flex-row align-middle">
-            <Text className="flex-1 font-semibold text-3xl px-4 py-2 bg-shade-2">
+          <View className="justify-center px-4">
+          <Pressable
+                className="active:opacity-50"
+                disabled={favMutation.isPending}
+                onPress={() => {
+                  router.back()
+                }}
+              >
+                <Icon name="close" size={28} />
+              </Pressable>
+              </View>
+            <Text className="flex-1 font-semibold text-3xl px-4 py-2">
               {work?.title}
             </Text>
             <View className="justify-center px-4">
@@ -67,32 +73,44 @@ export default function WorkScreen() {
               </Pressable>
             </View>
           </View>
-          <View className="px-4 gap-y-2 py-2">
-            {work?.creators.length ? (
-              <Text className="text-l">{work.creators[0].description}</Text>
-            ) : null}
-            <Text className="text-l">{work?.date_text}</Text>
-            <Text className="text-l">{work?.technique}</Text>
+          <View className="py-4 px-4 bg-shade-2">
+            <Image
+              style={{
+                height: dimensions.width > 640 ? 640 : dimensions.width,
+              }}
+              source={{ uri: work && work.images.web.url }}
+              contentFit="contain"
+              transition={500}
+            />
           </View>
-          {work?.description && (
-            <>
-              <Text className="text-xl font-semibold px-4 py-2 bg-shade-2">Description</Text>
-              <View className="px-4 gap-y-2 py-2">
-                <Text className="text-l">{stripTags(work.description)}</Text>
-              </View>
-            </>
-          )}
-          {work?.did_you_know && (
-            <>
-              <Text className="text-xl font-semibold px-4 py-2 bg-shade-2">Did you know?</Text>
-              <View className="px-4 gap-y-2 py-2">
-                <Text className="text-l">{stripTags(work.did_you_know)}</Text>
-              </View>
-            </>
-          )}
-        </View>
-      </ScrollView>
-      <LoadingShade isLoading={workQuery.isLoading || favQuery.isLoading} />
+          <View>
+            <View className="px-4 gap-y-2 py-2">
+              {work?.creators.length ? (
+                <Text className="text-l">{work.creators[0].description}</Text>
+              ) : null}
+              <Text className="text-l">{work?.date_text}</Text>
+              <Text className="text-l">{work?.technique}</Text>
+            </View>
+            {work?.description && (
+              <>
+                <Text className="text-xl font-semibold px-4 py-2 bg-shade-2">Description</Text>
+                <View className="px-4 gap-y-2 py-2">
+                  <Text className="text-l">{stripTags(work.description)}</Text>
+                </View>
+              </>
+            )}
+            {work?.did_you_know && (
+              <>
+                <Text className="text-xl font-semibold px-4 py-2 bg-shade-2">Did you know?</Text>
+                <View className="px-4 gap-y-2 py-2">
+                  <Text className="text-l">{stripTags(work.did_you_know)}</Text>
+                </View>
+              </>
+            )}
+          </View>
+        </ScrollView>
+        <LoadingShade isLoading={workQuery.isLoading || favQuery.isLoading} />
+      </View>
     </View>
   )
 }
